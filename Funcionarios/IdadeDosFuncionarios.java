@@ -24,6 +24,7 @@ public class IdadeDosFuncionarios {
 
                     Map<String, String> dadosDoNascimentoDoFuncionarioTemporario = new HashMap<>();
                     dadosDoNascimentoDoFuncionarioTemporario.put("Data Nascimento", dataNascimentoFuncionario.toString());
+                    dadosDoNascimentoDoFuncionarioTemporario.put("Mês Nascimento", String.valueOf(dataNascimentoFuncionario.getMonthValue()));
                     dadosDoNascimentoDoFuncionarioTemporario.put("Idade", Long.toString(idadeDoFuncionario));
 
                     DicionarioDataNascimentoFuncionario.put(funcionario.keySet().toString(), dadosDoNascimentoDoFuncionarioTemporario);
