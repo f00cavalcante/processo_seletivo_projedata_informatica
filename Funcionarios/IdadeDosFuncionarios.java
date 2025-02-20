@@ -3,9 +3,7 @@ package Funcionarios;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class IdadeDosFuncionarios {
@@ -16,18 +14,29 @@ public class IdadeDosFuncionarios {
 
           for (Map<String, Map<String, String>> funcionario : ListaDosFuncionarios) {
 
-               for (Map<String, String> dados : funcionario.values()) {
+               Map<String, String> dadosDoNascimentoDoFuncionarioTemporario = new HashMap<>();
 
-                    DateTimeFormatter formatarDataDeNascimento = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    LocalDate dataNascimentoFuncionario = LocalDate.parse(dados.get("Data Nascimento"), formatarDataDeNascimento);
-                    long idadeDoFuncionario = dataNascimentoFuncionario.until(LocalDate.now(), ChronoUnit.YEARS);
+               DateTimeFormatter formatarDataDeNascimento = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-                    Map<String, String> dadosDoNascimentoDoFuncionarioTemporario = new HashMap<>();
-                    dadosDoNascimentoDoFuncionarioTemporario.put("Data Nascimento", dataNascimentoFuncionario.toString());
-                    dadosDoNascimentoDoFuncionarioTemporario.put("Mês Nascimento", String.valueOf(dataNascimentoFuncionario.getMonthValue()));
-                    dadosDoNascimentoDoFuncionarioTemporario.put("Idade", Long.toString(idadeDoFuncionario));
+               for (Map.Entry<String, Map<String, String>> dados : funcionario.entrySet()) {
 
-                    DicionarioDataNascimentoFuncionario.put(funcionario.keySet().toString(), dadosDoNascimentoDoFuncionarioTemporario);
+                    Set<Map.Entry<String, String>> dadosDoFuncionario = dados.getValue().entrySet();
+
+                    for (Map.Entry<String, String> dadosDoFuncionarioNascimento : dadosDoFuncionario) {
+
+                         if (dadosDoFuncionarioNascimento.getKey().equals("Data Nascimento")) {
+
+                              LocalDate dataNascimentoFuncionario = LocalDate.parse(dadosDoFuncionarioNascimento.getValue().toString(), formatarDataDeNascimento);
+                              long idadeDoFuncionario = dataNascimentoFuncionario.until(LocalDate.now(), ChronoUnit.YEARS);
+
+                              dadosDoNascimentoDoFuncionarioTemporario.put("Data Nascimento", dataNascimentoFuncionario.toString());
+                              dadosDoNascimentoDoFuncionarioTemporario.put("Mês Nascimento", String.valueOf(dataNascimentoFuncionario.getMonthValue()));
+                              dadosDoNascimentoDoFuncionarioTemporario.put("Idade", Long.toString(idadeDoFuncionario));
+
+                         }
+                    }
+
+                    DicionarioDataNascimentoFuncionario.put(dados.getKey(), dadosDoNascimentoDoFuncionarioTemporario);
                }
           }
      }
@@ -45,7 +54,6 @@ public class IdadeDosFuncionarios {
                     nomeDoFuncionarioMaisVelho = funcionario;
                }
           }
-
 
           return nomeDoFuncionarioMaisVelho;
      }
