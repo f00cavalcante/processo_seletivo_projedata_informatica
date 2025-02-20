@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 public class DicionarioFuncionarios {
 
-     public static HashMap<String, Map<String, String>> Funcionarios = new HashMap<>();
+     public static HashMap<String, Map<String, String>> Funcionarios = new LinkedHashMap<String, Map<String, String>>();
 
      public DicionarioFuncionarios() throws FileNotFoundException, JSONException {
 
