@@ -3,20 +3,17 @@ package JSONDadosFuncionarios;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ListaDosFuncionarios {
+public class DicionarioFuncionarios {
 
-     public static List<Map<String, Map<String, String>>> ListaDosFuncionariosPorNome = new ArrayList<>();
+     public static HashMap<String, Map<String, String>> Funcionarios = new HashMap<>();
 
-     public ListaDosFuncionarios() throws FileNotFoundException, JSONException {
+     public DicionarioFuncionarios() throws FileNotFoundException, JSONException {
 
           BufferedReader arquivoJSON = new BufferedReader(new FileReader("JSONDadosFuncionarios/DadosDosFuncionarios.json"));
           StringBuilder arquivoJSONEmString = new StringBuilder();
@@ -37,7 +34,7 @@ public class ListaDosFuncionarios {
                          "Função", funcionario.get("funcao").toString()
                ));
 
-               ListaDosFuncionariosPorNome.add(Map.of(nomeFuncionario, dadosDoFuncionario));
+               Funcionarios.put(nomeFuncionario, dadosDoFuncionario);
           }
      }
 }
