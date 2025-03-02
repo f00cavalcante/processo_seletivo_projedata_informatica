@@ -1,6 +1,5 @@
 package Funcionarios;
 
-import java.text.CollationElementIterator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,11 +9,16 @@ import java.util.Map;
 
 public class FuncionariosAgrupadosPorFuncao {
 
+     private List<String> listaDasFuncoes = new ArrayList<>();
      private HashMap<String, List<String>> FuncionariosAgrupadosPorFuncao = new LinkedHashMap<>();
 
-     public HashMap<String, List<String>> FuncionariosAgrupadosPorFuncao(HashMap<String, Map<String, Object>> Funcionarios) {
+     public HashMap<String, List<String>> getFuncionariosAgrupadosPorFuncao() {
+          return this.FuncionariosAgrupadosPorFuncao;
+     }
 
-          List<String> listaDasFuncoes = CriarListaDasFuncoes(Funcionarios);
+     public FuncionariosAgrupadosPorFuncao(HashMap<String, Map<String, Object>> Funcionarios) {
+
+          CriarListaDasFuncoes(Funcionarios);
 
           for (String funcao : listaDasFuncoes) {
 
@@ -37,21 +41,17 @@ public class FuncionariosAgrupadosPorFuncao {
 
                FuncionariosAgrupadosPorFuncao.put(funcao, nomeDosFuncionarios);
           }
-
-          return this.FuncionariosAgrupadosPorFuncao;
      }
 
      private List<String> CriarListaDasFuncoes(HashMap<String, Map<String, Object>> Funcionarios) {
 
-          List<String> listaDasFuncoes = new ArrayList<>();
-
           for (Map.Entry<String, Map<String, Object>> funcionario : Funcionarios.entrySet()) {
 
-               if (!listaDasFuncoes.contains(funcionario.getValue().get("Função").toString())) listaDasFuncoes.add(funcionario.getValue().get("Função").toString());
+               if (!this.listaDasFuncoes.contains(funcionario.getValue().get("Função").toString())) this.listaDasFuncoes.add(funcionario.getValue().get("Função").toString());
           }
 
-          Collections.sort(listaDasFuncoes);
+          Collections.sort(this.listaDasFuncoes);
 
-          return listaDasFuncoes;
+          return this.listaDasFuncoes;
      }
 }

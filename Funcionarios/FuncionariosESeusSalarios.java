@@ -2,13 +2,15 @@ package Funcionarios;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class FuncionariosESeusSalarios {
 
-     private HashMap<String, Map<String, Object>> funcionariosComAumentoSalarial = new HashMap<>();
-     private HashMap<String, Object> funcionariosComMediasDeSalarioMinimo = new HashMap<>();
+     private HashMap<String, Map<String, Object>> funcionariosComAumentoSalarial = new LinkedHashMap<>();
+     private HashMap<String, Object> funcionariosComMediasDeSalarioMinimo = new LinkedHashMap<>();
      private BigDecimal somaDosSalarios = new BigDecimal(0);
+     private BigDecimal valorSalarioMinimo = new BigDecimal(0);
 
      public FuncionariosESeusSalarios(HashMap<String, Map<String, Object>> Funcionarios, Double PercentualAumento) {
 
@@ -22,10 +24,6 @@ public class FuncionariosESeusSalarios {
 
      public HashMap<String, Map<String, Object>> getFuncionariosComAumentoSalarial() {
           return this.funcionariosComAumentoSalarial;
-     }
-
-     public BigDecimal getSomaDosSalarios() {
-          return this.somaDosSalarios;
      }
 
      private void AumentoSalarial(HashMap<String, Map<String, Object>> Funcionarios, Double PercentualAumento) {
@@ -66,8 +64,35 @@ public class FuncionariosESeusSalarios {
           }
      }
 
+     public BigDecimal getSomaDosSalarios() {
+          return this.somaDosSalarios;
+     }
+
      private void SomaDosSalarios(BigDecimal salarioDoFuncionario) {
 
           this.somaDosSalarios = somaDosSalarios.add(new BigDecimal(salarioDoFuncionario.toString()));
+     }
+
+     public HashMap<String, Object> getfuncionariosComMediasDeSalarioMinimo() {
+
+          funcionariosComMediasDeSalarioMinimo();
+          return this.funcionariosComMediasDeSalarioMinimo;
+     }
+
+     public void setValorSalarioMinimo(BigDecimal valorSalarioMinimo) {
+          this.valorSalarioMinimo = new BigDecimal(valorSalarioMinimo.toString());
+     }
+
+     private void funcionariosComMediasDeSalarioMinimo() {
+
+          for (Map.Entry<String, Map<String, Object>> funcionario : this.funcionariosComAumentoSalarial.entrySet()) {
+
+               BigDecimal salarioDoFuncionario = new BigDecimal(funcionario.getValue().get("Salário").toString());
+               BigDecimal quantidadeDeSalarioMinimo = salarioDoFuncionario.divide(this.valorSalarioMinimo, 2);
+               this.funcionariosComMediasDeSalarioMinimo.put(
+                         funcionario.getKey(),
+                         quantidadeDeSalarioMinimo
+               );
+          }
      }
 }
